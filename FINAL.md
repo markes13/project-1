@@ -88,7 +88,7 @@ api = tweepy.API(auth, parser=tweepy.parsers.JSONParser())
 zKey = c.zKey
 
 # prompt user for input city, generate url for response, get city ID to use in loop
-city_lookup = 'Austin'
+city_lookup = input('Enter a city to query:')
 url = "https://developers.zomato.com/api/v2.1/cities?&q=%s&results=100" % (city_lookup)
 response = req.get(url, headers={"user-key" : zKey}).json()
 city_id = response['location_suggestions'][0]['id']
@@ -157,7 +157,7 @@ yelp_ratings = []
 yelp_reviews = []
 for name in names2:
     term = name
-    location = 'Austin'
+    location = city_lookup
     response = search(API_KEY, term, location)
     yelp_ratings.append(response['businesses'][0]['rating'])
     yelp_reviews.append(response['businesses'][0]['review_count'])
@@ -205,6 +205,7 @@ except Exception as e:
     print("Attempted to tweet: {}".format(tweet_text))
 ```
 
+    Enter a city to query:Austin
     Querying https://api.yelp.com/v3/businesses/search ...
     Querying https://api.yelp.com/v3/businesses/search ...
     Querying https://api.yelp.com/v3/businesses/search ...
@@ -305,6 +306,8 @@ except Exception as e:
     Querying https://api.yelp.com/v3/businesses/search ...
     Querying https://api.yelp.com/v3/businesses/search ...
     Querying https://api.yelp.com/v3/businesses/search ...
+    [{'code': 187, 'message': 'Status is a duplicate.'}]
+    Attempted to tweet: The top restaurants in Austin this week are: 1. Home Slice Pizza (4.67), 2. Torchy's Tacos (4.63), 3. Franklin Barbecue (4.6), 4. Gourdough's (4.6), & 5. Moonshine Patio Bar & Grill (4.57)
 
 
 
@@ -322,8 +325,8 @@ mapbox_access_token = c.map_box_token
 plotly.tools.set_credentials_file(username='kevious', api_key=c.pKey)
 
 # map info
-# get Austin lat and lon
-location_geo = geolocator.geocode('Austin, TX')
+# get city lat and lon
+location_geo = geolocator.geocode(city_lookup)
 lat_set = location_geo.latitude
 lon_set = location_geo.longitude
 

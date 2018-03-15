@@ -185,13 +185,17 @@ df2.to_csv('comp_ratings.csv')
 
 # 2. TWEET RESULTS ####################################################################################################
 # tweet top 5 results
-tweet_text = 'The top restaurants in %s this week are: 1. %s (%s), 2. %s (%s), 3. %s (%s), 4. %s (%s), & 5. %s (%s)' % (
-                                                                     city_lookup,
-                                                                     df2['Name'][0], round(df2['Composite Rating'][0],2),
-                                                                     df2['Name'][1], round(df2['Composite Rating'][1],2),
-                                                                     df2['Name'][2], round(df2['Composite Rating'][2],2),
-                                                                     df2['Name'][3], round(df2['Composite Rating'][3],2),
-                                                                     df2['Name'][4], round(df2['Composite Rating'][4],2))
+tweet_text = 'The top restaurants in %s this week are: 1. %s (%s), \
+2. %s (%s), \
+3. %s (%s), \
+4. %s (%s), \
+& 5. %s (%s)' % (
+                 city_lookup,
+                 df2['Name'][0], round(df2['Composite Rating'][0],2),
+                 df2['Name'][1], round(df2['Composite Rating'][1],2),
+                 df2['Name'][2], round(df2['Composite Rating'][2],2),
+                 df2['Name'][3], round(df2['Composite Rating'][3],2),
+                 df2['Name'][4], round(df2['Composite Rating'][4],2))
 
 
 try:
@@ -308,8 +312,8 @@ except Exception as e:
 # 3. PLOTLY ###########################################################################################################
 # build hover column
 for index, row in df2.iterrows():
-    df2['Hover'] = 'Name: ' + df2['Name'].astype(str) + '<br> Address: ' + df2['Address'].astype(str) \
-    + '<br> Composite Rating: ' + df2['Composite Rating'].astype(str) + '<br> Total Review Count: ' + df2['Total Review count'].astype(str)
+    df2['Hover'] = 'Name: ' + df2['Name'].astype(str) + '<br>Address: ' + df2['Address'].astype(str) \
+    + '<br>Composite Rating: ' + round(df2['Composite Rating'], 2).astype(str) + '<br>Total Review Count: ' + df2['Total Review count'].astype(str)
     
 # plotly map
 
@@ -346,7 +350,7 @@ layout = Layout(
             lon=lon_set
         ),
         pitch=0,
-        zoom=8,
+        zoom=10,
     ),
 )
 
